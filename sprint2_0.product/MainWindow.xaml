@@ -21,20 +21,25 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="1" Text="SOS" FontSize="32" FontWeight="Bold" TextAlignment="Center" />
+        
         <StackPanel Name="RecordGameSetting" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Visibility="Hidden">
             <CheckBox Content="Record game" FontSize="14"/>
         </StackPanel>
+        
         <StackPanel Name="GameModeSetting" Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
             <TextBlock Text="Game mode: " FontSize="14" Margin="0, 0, 5, 0" />
-            <RadioButton GroupName="GameMode" Name="SimpleGame" Content="Simple" FontSize="14" IsChecked="True" Margin="0, 0, 10, 0" />
-            <RadioButton GroupName="GameMode" Name="GeneralGame" Content="General" FontSize="14" />
+            <RadioButton GroupName="GameMode" Name="SimpleGame" Content="Simple" FontSize="14" IsChecked="True" Margin="0, 0, 10, 0" Checked="GameMode_Checked" />
+            <RadioButton GroupName="GameMode" Name="GeneralGame" Content="General" FontSize="14" Checked="GameMode_Checked" />
         </StackPanel>
+        
         <StackPanel Name="BoardSizeSetting" Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
             <TextBlock Text="Board size: " FontSize="14" Margin="0, 0, 5, 0" />
             <TextBox Name="BoardSize" Text="3" FontSize="13" TextChanged="BoardSize_TextChanged" />
         </StackPanel>
+        
         <StackPanel Name="BluePlayerSetting" Grid.Row="2" Grid.Column="0" Orientation="Vertical">
             <TextBlock Text="Blue Player" FontSize="20" FontWeight="Bold" Foreground="Blue"/>
+            
             <StackPanel Margin="0, 15, 0, 0">
                 <RadioButton GroupName="BluePlayerType" Name="BluePlayerHuman" Content="Human" FontSize="14" IsChecked="True" Margin="0, 0, 0, 5" Visibility="Hidden" />
                 <RadioButton GroupName="BluePlayerLetter" Name="BluePlayerS" Content="S" FontSize="14" IsChecked="True" Margin="15, 0, 0, 0" Checked="BluePlayerLetter_Checked" />
@@ -42,30 +47,34 @@
                 <RadioButton GroupName="BluePlayerType" Name="BluePlayerComputer" Content="Computer" FontSize="14" Visibility="Hidden" />
             </StackPanel>
         </StackPanel>
+        
         <Grid Name="GameBoard" Grid.Row="2" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="33*" />
                 <RowDefinition Height="33*" />
                 <RowDefinition Height="33*" />
             </Grid.RowDefinitions>
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="33*" />
                 <ColumnDefinition Width="33*" />
                 <ColumnDefinition Width="33*" />
             </Grid.ColumnDefinitions>
 
-            <Button Name="Square00" Grid.Row="0" Grid.Column="0" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquareButton_Click" />
-            <Button Name="Square01" Grid.Row="0" Grid.Column="1" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquareButton_Click" />
-            <Button Name="Square02" Grid.Row="0" Grid.Column="2" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquareButton_Click" />
-            <Button Name="Square10" Grid.Row="1" Grid.Column="0" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquareButton_Click" />
-            <Button Name="Square11" Grid.Row="1" Grid.Column="1" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquareButton_Click" />
-            <Button Name="Square12" Grid.Row="1" Grid.Column="2" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquareButton_Click" />
-            <Button Name="Square20" Grid.Row="2" Grid.Column="0" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquareButton_Click" />
-            <Button Name="Square21" Grid.Row="2" Grid.Column="1" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquareButton_Click" />
-            <Button Name="Square22" Grid.Row="2" Grid.Column="2" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquareButton_Click" />
+            <Button Name="Square00" Grid.Row="0" Grid.Column="0" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquare_Click" />
+            <Button Name="Square01" Grid.Row="0" Grid.Column="1" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquare_Click" />
+            <Button Name="Square02" Grid.Row="0" Grid.Column="2" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquare_Click" />
+            <Button Name="Square10" Grid.Row="1" Grid.Column="0" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquare_Click" />
+            <Button Name="Square11" Grid.Row="1" Grid.Column="1" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquare_Click" />
+            <Button Name="Square12" Grid.Row="1" Grid.Column="2" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquare_Click" />
+            <Button Name="Square20" Grid.Row="2" Grid.Column="0" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquare_Click" />
+            <Button Name="Square21" Grid.Row="2" Grid.Column="1" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquare_Click" />
+            <Button Name="Square22" Grid.Row="2" Grid.Column="2" FontSize="24" FontWeight="Bold" Background="WhiteSmoke" Click="BoardSquare_Click" />
         </Grid>
+        
         <StackPanel Name="RedPlayerSetting" Grid.Row="2" Grid.Column="2" Orientation="Vertical" Margin="15, 0, 0, 0">
             <TextBlock Text="Red Player" FontSize="20" FontWeight="Bold" Foreground="Red"/>
+            
             <StackPanel Margin="0, 15, 0, 0">
                 <RadioButton GroupName="RedPlayerType" Name="RedPlayerHuman" Content="Human" FontSize="14" IsChecked="True" Margin="0, 0, 0, 5" Visibility="Hidden" />
                 <RadioButton GroupName="RedPlayerLetter" Name="RedPlayerS" Content="S" FontSize="14" IsChecked="True" Margin="15, 0, 0, 0" Checked="RedPlayerLetter_Checked" />
@@ -73,10 +82,12 @@
                 <RadioButton GroupName="RedPlayerType" Name="RedPlayerComputer" Content="Computer" FontSize="14" Visibility="Hidden" />
             </StackPanel>
         </StackPanel>
+        
         <StackPanel Name="CurrentPlayerDisplay" Grid.Row="3" Grid.Column="1" Orientation="Vertical">
             <TextBlock Text="Current turn: " FontSize="16" FontWeight="Bold" TextAlignment="Center" />
             <TextBlock Name="CurrentPlayer" Text="Blue" FontSize="14" TextAlignment="Center" Foreground="Blue" />
         </StackPanel>
-        <Button Grid.Row="3" Grid.Column="2" Margin="10" Content="New Game" FontSize="14" FontWeight="Bold" Click="NewGameButton_Click" />
+        
+        <Button Grid.Row="3" Grid.Column="2" Margin="10" Content="New Game" FontSize="14" FontWeight="Bold" Click="NewGame_Click" />
     </Grid>
 </Window>
