@@ -23,7 +23,7 @@
         <TextBlock Grid.Row="0" Grid.Column="1" Text="SOS" FontSize="32" FontWeight="Bold" TextAlignment="Center" />
         
         <StackPanel Name="RecordGameSetting" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Visibility="Hidden">
-            <CheckBox Content="Record game" FontSize="14"/>
+            <CheckBox Content="Record game" FontSize="14" />
         </StackPanel>
         
         <StackPanel Name="GameModeSetting" Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
@@ -38,7 +38,7 @@
         </StackPanel>
         
         <StackPanel Name="BluePlayerSetting" Grid.Row="2" Grid.Column="0" Orientation="Vertical">
-            <TextBlock Text="Blue Player" FontSize="20" FontWeight="Bold" Foreground="Blue"/>
+            <TextBlock Text="Blue Player" FontSize="20" FontWeight="Bold" Foreground="Blue" />
             
             <StackPanel Margin="0, 15, 0, 0">
                 <RadioButton GroupName="BluePlayerType" Name="BluePlayerHuman" Content="Human" FontSize="14" IsChecked="True" Margin="0, 0, 0, 5" Visibility="Hidden" />
@@ -73,7 +73,7 @@
         </Grid>
         
         <StackPanel Name="RedPlayerSetting" Grid.Row="2" Grid.Column="2" Orientation="Vertical" Margin="15, 0, 0, 0">
-            <TextBlock Text="Red Player" FontSize="20" FontWeight="Bold" Foreground="Red"/>
+            <TextBlock Text="Red Player" FontSize="20" FontWeight="Bold" Foreground="Red" />
             
             <StackPanel Margin="0, 15, 0, 0">
                 <RadioButton GroupName="RedPlayerType" Name="RedPlayerHuman" Content="Human" FontSize="14" IsChecked="True" Margin="0, 0, 0, 5" Visibility="Hidden" />
@@ -87,7 +87,7 @@
             <TextBlock Text="Current turn: " FontSize="16" FontWeight="Bold" TextAlignment="Center" />
             <TextBlock Name="CurrentPlayer" Text="Blue" FontSize="14" TextAlignment="Center" Foreground="Blue" />
         </StackPanel>
-        
-        <Button Grid.Row="3" Grid.Column="2" Margin="10" Content="New Game" FontSize="14" FontWeight="Bold" Click="NewGame_Click" />
+
+        <Button Grid.Row="3" Grid.Column="2" Content="New Game" FontSize="14" FontWeight="Bold" Margin="10" Click="NewGame_Click" />
     </Grid>
 </Window>

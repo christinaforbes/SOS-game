@@ -15,13 +15,24 @@ namespace SoSGameTests {
         new char[] {'\0', '\0', '\0', '\0', '\0'},
         new char[] {'\0', '\0', '\0', '\0', '\0'},
         new char[] {'\0', '\0', '\0', '\0', '\0'},
-        new char[] {'\0', '\0', '\0', '\0', '\0' }
+        new char[] {'\0', '\0', '\0', '\0', '\0'}
       };
 
       GameState.CreateNewGameBoardContents(5);
-      char[][] actual  = GameState.GameBoardContents;
+      char[][] actual = GameState.GameBoardContents;
 
       Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public void UpdateGameInProgressState_GameInProgress_IsEqual(bool gameInProgress) {
+      GameState.GameInProgress = gameInProgress;
+
+      GameState.UpdateGameInProgressState();
+      bool actual = GameState.GameInProgress;
+
+      Assert.That(actual, Is.EqualTo(!gameInProgress));
     }
 
     [TestCase('S', 0, 0)]
@@ -33,17 +44,6 @@ namespace SoSGameTests {
       char actual = GameState.GameBoardContents[row][column];
 
       Assert.That(actual, Is.EqualTo(letter));
-    }
-
-    [TestCase(true)]
-    [TestCase(false)]
-    public void UpdateGameInProgressState_GameInProgress_IsTrue(bool gameInProgress) {
-      GameState.GameInProgress = gameInProgress;
-      
-      GameState.UpdateGameInProgressState();
-      bool actual = GameState.GameInProgress;
-
-      Assert.That(actual, Is.EqualTo(!gameInProgress));
     }
   }
 }

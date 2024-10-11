@@ -60,10 +60,9 @@ namespace SoSGame
 
     private void SetGameMode() {
       if (SimpleGame.IsChecked == true) {
-        GameState.UpdateGameMode('S');
-      }
-      else if (GeneralGame.IsChecked == true) {
-        GameState.UpdateGameMode('G');
+        GameState.GameMode = 'S';
+      } else if (GeneralGame.IsChecked == true) {
+        GameState.GameMode = 'G';
       }
 
       string gameMode = (GameState.GameMode == 'S') ? "simple" : "general";
@@ -103,8 +102,7 @@ namespace SoSGame
           if (!GameLogic.IsBoardSizeValid(boardSizeTextBoxVal) && boardSizeTextBoxVal != "") {
             string errorMessage = "Please enter a valid integer between 3 and 10, inclusive";
             MessageBoxResult errorMessageBox = MessageBox.Show(errorMessage, "Invalid Board Size", MessageBoxButton.OK, MessageBoxImage.Error);
-          }
-          else if (GameLogic.IsBoardSizeValid(boardSizeTextBoxVal) && !GameState.GameInProgress) {
+          } else if (GameLogic.IsBoardSizeValid(boardSizeTextBoxVal) && !GameState.GameInProgress) {
             CreateNewGameBoard();
           }
         }
@@ -116,17 +114,17 @@ namespace SoSGame
 
     private void BluePlayerLetter_Checked(object sender, RoutedEventArgs e) {
       if (BluePlayerS.IsChecked == true) {
-        GameState.UpdateBluePlayerLetter('S');
+        GameState.BluePlayerLetter = 'S';
       } else if (BluePlayerO.IsChecked == true) {
-        GameState.UpdateBluePlayerLetter('O');
+        GameState.BluePlayerLetter = 'O';
       }
     }
 
     private void RedPlayerLetter_Checked(object sender, RoutedEventArgs e) {
       if (RedPlayerS.IsChecked == true) {
-        GameState.UpdateRedPlayerLetter('S');
+        GameState.RedPlayerLetter ='S';
       } else if (RedPlayerO.IsChecked == true) {
-        GameState.UpdateRedPlayerLetter('O');
+        GameState.RedPlayerLetter = 'O';
       }
     }
 
@@ -149,7 +147,7 @@ namespace SoSGame
 
           CurrentPlayer.Text = "Red";
           CurrentPlayer.Foreground = Brushes.Red;
-          GameState.UpdateCurrentPlayer('R');
+          GameState.CurrentPlayer = 'R';
         } else if (GameState.CurrentPlayer == 'R') {
           if (GameState.RedPlayerLetter == 'S') {
             boardSquare.Content = "S";
@@ -161,7 +159,7 @@ namespace SoSGame
 
           CurrentPlayer.Text = "Blue";
           CurrentPlayer.Foreground = Brushes.Blue;
-          GameState.UpdateCurrentPlayer('B');
+          GameState.CurrentPlayer = 'B';
         }
       }
     }

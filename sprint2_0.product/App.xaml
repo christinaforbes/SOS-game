@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:sprint2_0.product"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
     </Application.Resources>
 </Application>
 

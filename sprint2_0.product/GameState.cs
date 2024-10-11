@@ -39,8 +39,6 @@
       for (int i = 0; i < BoardSize; i++) {
         GameBoardContents[i] = new char[BoardSize];
       }
-
-      return;
     }
 
     public static void CreateNewGameBoardContents(int newBoardSize) {
@@ -51,38 +49,18 @@
       for (int i = 0; i < BoardSize; i++) {
         GameBoardContents[i] = new char[BoardSize];
       }
-
-      return;
     }
 
-    public static void UpdateGameMode(char newGameMode) {
-      GameMode = newGameMode;
-      return;
+    public static void UpdateGameInProgressState() {
+      GameInProgress = !GameInProgress;
     }
 
     public static void UpdateGameBoardContents(char letter, int row, int column) {
       GameBoardContents[row][column] = letter;
 
       if (!GameInProgress) {
-        GameInProgress = true;
+        UpdateGameInProgressState();
       }
-      
-      return;
-    }
-
-    public static void UpdateCurrentPlayer(char newCurrentPlayer) {
-      CurrentPlayer = newCurrentPlayer;
-      return;
-    }
-
-    public static void UpdateBluePlayerLetter(char newBluePlayerLetter) {
-      BluePlayerLetter = newBluePlayerLetter;
-      return;
-    }
-
-    public static void UpdateRedPlayerLetter(char newRedPlayerLetter) {
-      RedPlayerLetter = newRedPlayerLetter;
-      return;
     }
   }
 }

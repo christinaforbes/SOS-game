@@ -1,10 +1,8 @@
 ﻿using System.Windows;
 
-namespace sprint2_0.product {
+namespace SoSGame {
   /// <summary>
   /// Interaction logic for App.xaml
   /// </summary>
-  public partial class App : Application
-  {
-  }
+  public partial class App : Application {}
 }
