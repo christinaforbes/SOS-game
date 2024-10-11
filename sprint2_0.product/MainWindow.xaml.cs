@@ -102,6 +102,8 @@ namespace SoSGame
           if (!GameLogic.IsBoardSizeValid(boardSizeTextBoxVal) && boardSizeTextBoxVal != "") {
             string errorMessage = "Please enter a valid integer between 3 and 10, inclusive";
             MessageBoxResult errorMessageBox = MessageBox.Show(errorMessage, "Invalid Board Size", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            BoardSize.Text = $"{GameState.BoardSize}";
           } else if (GameLogic.IsBoardSizeValid(boardSizeTextBoxVal) && !GameState.GameInProgress) {
             CreateNewGameBoard();
           }
