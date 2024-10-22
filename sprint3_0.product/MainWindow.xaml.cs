@@ -18,11 +18,28 @@ namespace SoSGame
   /// </summary>
   public partial class MainWindow : Window
   {
+    private GameLogic _gameLogic = new SimpleGameLogic();
     private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
     public MainWindow()
     {
       InitializeComponent();
+    }
+
+    private void SetGameMode() {
+      int boardSize = Convert.ToInt32(BoardSize.Text);
+      string gameMode = "";
+
+      if (SimpleGame.IsChecked == true) {
+        _gameLogic = new SimpleGameLogic(boardSize);
+        gameMode = "simple";
+      } else if (GeneralGame.IsChecked == true) {
+        _gameLogic = new GeneralGameLogic(boardSize);
+        gameMode = "general";
+      }
+
+      string message = $"You're now playing a {gameMode} game!";
+      MessageBoxResult gameModeMessageBox = MessageBox.Show(message, "", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void CreateNewGameBoard() {
@@ -61,35 +78,21 @@ namespace SoSGame
         }
       }
 
-      GameState.CreateNewGameBoardContents(boardSize);
-    }
-
-    private void SetGameMode() {
-      if (SimpleGame.IsChecked == true) {
-        GameState.GameMode = 'S';
-      } else if (GeneralGame.IsChecked == true) {
-        GameState.GameMode = 'G';
-      }
-
-      string gameMode = (GameState.GameMode == 'S') ? "simple" : "general";
-      string message = $"You're now playing a {gameMode} game!";
-      MessageBoxResult gameModeMessageBox = MessageBox.Show(message, "", MessageBoxButton.OK, MessageBoxImage.Information);
+      _gameLogic.CreateNewGameBoardContents(boardSize);
     }
 
     private void StartNewGame() {
-      CreateNewGameBoard();
       SetGameMode();
-
+      CreateNewGameBoard();
+      
       CurrentPlayer.Text = "Blue";
       CurrentPlayer.Foreground = Brushes.Blue;
       BluePlayerS.IsChecked = true;
       RedPlayerS.IsChecked = true;
-
-      GameState.ResetGameState();
     }
 
     private void GameMode_Checked(object sender, RoutedEventArgs e) {
-      if (GameGrid.IsLoaded && !GameState.GameInProgress) {
+      if (GameGrid.IsLoaded && !_gameLogic.GameInProgress) {
         SetGameMode();
       }
     }
@@ -104,35 +107,35 @@ namespace SoSGame
 
         if (!cancellationToken.IsCancellationRequested) {
           string boardSizeTextBoxVal = BoardSize.Text;
+          bool isBoardSizeValid = _gameLogic.IsBoardSizeValid(boardSizeTextBoxVal);
 
-          if (!GameLogic.IsBoardSizeValid(boardSizeTextBoxVal) && boardSizeTextBoxVal != "") {
+          if (!isBoardSizeValid && boardSizeTextBoxVal != "") {
             string errorMessage = "Please enter a valid integer between 3 and 10, inclusive";
             MessageBoxResult errorMessageBox = MessageBox.Show(errorMessage, "Invalid Board Size", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            BoardSize.Text = $"{GameState.BoardSize}";
-          } else if (GameLogic.IsBoardSizeValid(boardSizeTextBoxVal) && !GameState.GameInProgress) {
+            BoardSize.Text = $"{_gameLogic.BoardSize}";
+          } else if (isBoardSizeValid && !_gameLogic.GameInProgress) {
             CreateNewGameBoard();
           }
         }
-      }
-      catch (TaskCanceledException) {
+      } catch (TaskCanceledException) {
         return;
       }
     }
 
     private void BluePlayerLetter_Checked(object sender, RoutedEventArgs e) {
       if (BluePlayerS.IsChecked == true) {
-        GameState.BluePlayerLetter = 'S';
+        _gameLogic.BluePlayerLetter = 'S';
       } else if (BluePlayerO.IsChecked == true) {
-        GameState.BluePlayerLetter = 'O';
+        _gameLogic.BluePlayerLetter = 'O';
       }
     }
 
     private void RedPlayerLetter_Checked(object sender, RoutedEventArgs e) {
       if (RedPlayerS.IsChecked == true) {
-        GameState.RedPlayerLetter ='S';
+        _gameLogic.RedPlayerLetter ='S';
       } else if (RedPlayerO.IsChecked == true) {
-        GameState.RedPlayerLetter = 'O';
+        _gameLogic.RedPlayerLetter = 'O';
       }
     }
 
@@ -142,9 +145,9 @@ namespace SoSGame
           string squareName = $"Square{sequenceSquare.Item1}{sequenceSquare.Item2}";
           Button square = (Button)GameBoard.FindName(squareName);
 
-          if (GameState.GameMode == 'S') {
+          if (_gameLogic.GameMode == 'S') {
             square.Background = Brushes.Blue;
-          } else if (GameState.GameMode == 'G') {
+          } else if (_gameLogic.GameMode == 'G') {
             if (square.Background == Brushes.Purple) {
               continue;
             } else if (square.Background == Brushes.Red) {
@@ -159,9 +162,9 @@ namespace SoSGame
           string squareName = $"Square{sequenceSquare.Item1}{sequenceSquare.Item2}";
           Button square = (Button)GameBoard.FindName(squareName);
 
-          if (GameState.GameMode == 'S') {
+          if (_gameLogic.GameMode == 'S') {
             square.Background = Brushes.Red;
-          } else if (GameState.GameMode == 'G') {
+          } else if (_gameLogic.GameMode == 'G') {
             if (square.Background == Brushes.Purple) {
               continue;
             } else if (square.Background == Brushes.Blue) {
@@ -190,55 +193,55 @@ namespace SoSGame
 
     private void EndMove(char currentPlayer, bool moveFormsSequence) {
       if (currentPlayer == 'B') {
-        if (GameState.GameMode == 'S') {
-          bool gameOver = SimpleGameLogic.GameOver();
+        if (_gameLogic.GameMode == 'S') {
+          bool gameOver = _gameLogic.GameOver();
 
           if (gameOver) {
-            char winner = SimpleGameLogic.DetermineWinner();
+            char winner = _gameLogic.DetermineWinner();
             DisplayGameOverMessage(winner);
           } else {
             CurrentPlayer.Text = "Red";
             CurrentPlayer.Foreground = Brushes.Red;
-            GameState.CurrentPlayer = 'R';
+            _gameLogic.CurrentPlayer = 'R';
           }
-        } else if (GameState.GameMode == 'G') {
-          bool gameOver = GeneralGameLogic.GameOver();
+        } else if (_gameLogic.GameMode == 'G') {
+          bool gameOver = _gameLogic.GameOver();
       
           if (gameOver) {
-            char winner = GeneralGameLogic.DetermineWinner();
+            char winner = _gameLogic.DetermineWinner();
             DisplayGameOverMessage(winner);
           } else if (moveFormsSequence && !gameOver) {
             return;
           } else {
             CurrentPlayer.Text = "Red";
             CurrentPlayer.Foreground = Brushes.Red;
-            GameState.CurrentPlayer = 'R';
+            _gameLogic.CurrentPlayer = 'R';
           }
         }
       } else if (currentPlayer == 'R') {
-        if (GameState.GameMode == 'S') {
-          bool gameOver = SimpleGameLogic.GameOver();
+        if (_gameLogic.GameMode == 'S') {
+          bool gameOver = _gameLogic.GameOver();
 
           if (gameOver) {
-            char winner = SimpleGameLogic.DetermineWinner();
+            char winner = _gameLogic.DetermineWinner();
             DisplayGameOverMessage(winner);
           } else {
             CurrentPlayer.Text = "Blue";
             CurrentPlayer.Foreground = Brushes.Blue;
-            GameState.CurrentPlayer = 'B';
+            _gameLogic.CurrentPlayer = 'B';
           }
-        } else if (GameState.GameMode == 'G') {
-          bool gameOver = GeneralGameLogic.GameOver();
+        } else if (_gameLogic.GameMode == 'G') {
+          bool gameOver = _gameLogic.GameOver();
 
           if (gameOver) {
-            char winner = GeneralGameLogic.DetermineWinner();
+            char winner = _gameLogic.DetermineWinner();
             DisplayGameOverMessage(winner);
           } else if (moveFormsSequence && !gameOver) {
             return;
           } else {
             CurrentPlayer.Text = "Blue";
             CurrentPlayer.Foreground = Brushes.Blue;
-            GameState.CurrentPlayer = 'B';
+            _gameLogic.CurrentPlayer = 'B';
           }
         }
       }
@@ -251,55 +254,55 @@ namespace SoSGame
       int row = (int)boardSquare.GetValue(Grid.RowProperty);
       int column = (int)boardSquare.GetValue(Grid.ColumnProperty);
 
-      if (GameLogic.IsMoveValid(row, column)) {
-        if (GameState.CurrentPlayer == 'B') {
-          if (GameState.BluePlayerLetter == 'S') {
+      if (_gameLogic.IsMoveValid(row, column)) {
+        if (_gameLogic.CurrentPlayer == 'B') {
+          if (_gameLogic.BluePlayerLetter == 'S') {
             boardSquare.Content = "S";
-            GameState.UpdateGameBoardContents('S', row, column);
+            _gameLogic.UpdateGameBoardContents('S', row, column);
 
-            (bool moveFormsSequence, List<Tuple<int, int>> sequenceSquares) = GameLogic.SMoveFormsSequence(row, column);
+            (bool moveFormsSequence, List<Tuple<int, int>> sequenceSquares) = _gameLogic.SMoveFormsSequence(row, column);
 
             if (moveFormsSequence) {
               ColorSequenceSquares('B', sequenceSquares);
-              GameState.BluePlayerPoints = sequenceSquares.Count / 2;
+              _gameLogic.BluePlayerPoints = sequenceSquares.Count / 2;
             }
 
             EndMove('B', moveFormsSequence);
-          } else if (GameState.BluePlayerLetter == 'O') {
+          } else if (_gameLogic.BluePlayerLetter == 'O') {
             boardSquare.Content = "O";
-            GameState.UpdateGameBoardContents('O', row, column);
+            _gameLogic.UpdateGameBoardContents('O', row, column);
 
-            (bool moveFormsSequence, List<Tuple<int, int>> sequenceSquares) = GameLogic.OMoveFormsSequence(row, column);
+            (bool moveFormsSequence, List<Tuple<int, int>> sequenceSquares) = _gameLogic.OMoveFormsSequence(row, column);
 
             if (moveFormsSequence) {
               ColorSequenceSquares('B', sequenceSquares);
-              GameState.BluePlayerPoints = sequenceSquares.Count / 2;
+              _gameLogic.BluePlayerPoints = sequenceSquares.Count / 2;
             }
 
             EndMove('B', moveFormsSequence);
           }
-        } else if (GameState.CurrentPlayer == 'R') {
-          if (GameState.RedPlayerLetter == 'S') {
+        } else if (_gameLogic.CurrentPlayer == 'R') {
+          if (_gameLogic.RedPlayerLetter == 'S') {
             boardSquare.Content = "S";
-            GameState.UpdateGameBoardContents('S', row, column);
+            _gameLogic.UpdateGameBoardContents('S', row, column);
 
-            (bool moveFormsSequence, List<Tuple<int, int>> sequenceSquares) = GameLogic.SMoveFormsSequence(row, column);
+            (bool moveFormsSequence, List<Tuple<int, int>> sequenceSquares) = _gameLogic.SMoveFormsSequence(row, column);
 
             if (moveFormsSequence) {
               ColorSequenceSquares('R', sequenceSquares);
-              GameState.RedPlayerPoints = sequenceSquares.Count / 2;
+              _gameLogic.RedPlayerPoints = sequenceSquares.Count / 2;
             }
 
             EndMove('R', moveFormsSequence);
-          } else if (GameState.RedPlayerLetter == 'O') {
+          } else if (_gameLogic.RedPlayerLetter == 'O') {
             boardSquare.Content = "O";
-            GameState.UpdateGameBoardContents('O', row, column);
+            _gameLogic.UpdateGameBoardContents('O', row, column);
 
-            (bool moveFormsSequence, List<Tuple<int, int>> sequenceSquares) = GameLogic.OMoveFormsSequence(row, column);
+            (bool moveFormsSequence, List<Tuple<int, int>> sequenceSquares) = _gameLogic.OMoveFormsSequence(row, column);
 
             if (moveFormsSequence) {
               ColorSequenceSquares('R', sequenceSquares);
-              GameState.RedPlayerPoints = sequenceSquares.Count / 2;
+              _gameLogic.RedPlayerPoints = sequenceSquares.Count / 2;
             }
 
             EndMove('R', moveFormsSequence);
@@ -309,7 +312,7 @@ namespace SoSGame
     }
 
     private void NewGame_Click(object sender, RoutedEventArgs e) {
-      if (GameState.GameInProgress) {
+      if (_gameLogic.GameInProgress) {
         string confirmMessage = "Are you sure you want to start a new game?";
         MessageBoxResult confirmMessageBox = MessageBox.Show(confirmMessage, "", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 

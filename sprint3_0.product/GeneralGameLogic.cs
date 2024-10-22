@@ -1,13 +1,21 @@
 ﻿namespace SoSGame {
   class GeneralGameLogic : GameLogic {
-    internal static bool GameOver() {
-      return GameState.GameBoardContents.All(row => row.All(square => square != '\0'));
+    public GeneralGameLogic() : base() {
+      GameMode = 'G';
     }
 
-    internal static char DetermineWinner() {
-      if (GameState.BluePlayerPoints > GameState.RedPlayerPoints) {
+    public GeneralGameLogic(int newBoardSize) : base(newBoardSize) {
+      GameMode = 'G';
+    }
+
+    internal override bool GameOver() {
+      return GameBoardContents.All(row => row.All(square => square != '\0'));
+    }
+
+    internal override char DetermineWinner() {
+      if (BluePlayerPoints > RedPlayerPoints) {
         return 'B';
-      } else if (GameState.RedPlayerPoints > GameState.BluePlayerPoints) {
+      } else if (RedPlayerPoints > BluePlayerPoints) {
         return 'R';
       } else {
         return 'D';
