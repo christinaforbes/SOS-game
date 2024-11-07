@@ -16,7 +16,7 @@
       throw new NotImplementedException("SelectLetter() must be overridden in a derived class.");
     }
 
-    internal virtual Tuple<int, int> SelectSquare(GameLogic gameLogic) {
+    internal virtual Tuple<int, int> SelectSquare(int boardSize, Func<int, int, bool> isMoveValid) {
       throw new NotImplementedException("SelectSquare() must be overridden in a derived class.");
     }
   }

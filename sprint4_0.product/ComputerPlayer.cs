@@ -12,15 +12,14 @@
       return letters[index];
     }
 
-    internal override Tuple<int, int> SelectSquare(GameLogic gameLogic) {
-      int boardSize = gameLogic.BoardSize;
+    internal override Tuple<int, int> SelectSquare(int boardSize, Func<int, int, bool> isMoveValid) {
       int row;
       int column;
 
       do {
         row = _random.Next(boardSize);
         column = _random.Next(boardSize);
-      } while (!gameLogic.IsMoveValid(row, column));
+      } while (!isMoveValid(row, column));
 
       return Tuple.Create(row, column);
     }

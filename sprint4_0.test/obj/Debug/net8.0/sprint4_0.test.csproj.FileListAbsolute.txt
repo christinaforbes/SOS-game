@@ -1,0 +1,6 @@
+C:\Users\chris\source\repos\SOS-game\sprint4_0.test\obj\Debug\net8.0\sprint4_0.test.csproj.AssemblyReference.cache
+C:\Users\chris\source\repos\SOS-game\sprint4_0.test\obj\Debug\net8.0\sprint4_0.test.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chris\source\repos\SOS-game\sprint4_0.test\obj\Debug\net8.0\sprint4_0.test.AssemblyInfoInputs.cache
+C:\Users\chris\source\repos\SOS-game\sprint4_0.test\obj\Debug\net8.0\sprint4_0.test.AssemblyInfo.cs
+C:\Users\chris\source\repos\SOS-game\sprint4_0.test\obj\Debug\net8.0\sprint4_0.test.csproj.CoreCompileInputs.cache
+C:\Users\chris\source\repos\SOS-game\sprint4_0.test\obj\Debug\net8.0\sprint4_0.test.sourcelink.json

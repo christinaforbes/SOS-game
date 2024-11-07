@@ -213,7 +213,7 @@ namespace SoSGame {
         _gameLogic.CurrentPlayer.PlayerLetter = 'O';
       }
 
-      Tuple<int, int> square = _gameLogic.CurrentPlayer.SelectSquare(_gameLogic);
+      Tuple<int, int> square = _gameLogic.CurrentPlayer.SelectSquare(_gameLogic.BoardSize, _gameLogic.IsMoveValid);
       string squareName = $"Square{square.Item1}{square.Item2}";
       Button squareButton = (Button)GameBoard.FindName(squareName);
 
