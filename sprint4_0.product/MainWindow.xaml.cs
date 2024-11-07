@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -283,6 +284,8 @@ namespace SoSGame {
       }
 
       MessageBoxResult gameOverMessageBox = MessageBox.Show(gameOverMessage, "", MessageBoxButton.OK, MessageBoxImage.None);
+      Debug.WriteLine($"{_gameLogic.BluePlayer.Points}");
+      Debug.WriteLine($"{_gameLogic.RedPlayer.Points}");
     }
 
     private void EndMove(char currentPlayer, bool moveFormsSequence) {
@@ -378,7 +381,7 @@ namespace SoSGame {
 
             if (moveFormsSequence) {
               ColorSequenceSquares('B', sequenceSquares);
-              _gameLogic.BluePlayer.Points = sequenceSquares.Count / 2;
+              _gameLogic.BluePlayer.Points += sequenceSquares.Count / 2;
             }
 
             EndMove('B', moveFormsSequence);
@@ -390,7 +393,7 @@ namespace SoSGame {
 
             if (moveFormsSequence) {
               ColorSequenceSquares('B', sequenceSquares);
-              _gameLogic.BluePlayer.Points = sequenceSquares.Count / 2;
+              _gameLogic.BluePlayer.Points += sequenceSquares.Count / 2;
             }
 
             EndMove('B', moveFormsSequence);
@@ -404,7 +407,7 @@ namespace SoSGame {
 
             if (moveFormsSequence) {
               ColorSequenceSquares('R', sequenceSquares);
-              _gameLogic.RedPlayer.Points = sequenceSquares.Count / 2;
+              _gameLogic.RedPlayer.Points += sequenceSquares.Count / 2;
             }
 
             EndMove('R', moveFormsSequence);
@@ -416,7 +419,7 @@ namespace SoSGame {
 
             if (moveFormsSequence) {
               ColorSequenceSquares('R', sequenceSquares);
-              _gameLogic.RedPlayer.Points = sequenceSquares.Count / 2;
+              _gameLogic.RedPlayer.Points += sequenceSquares.Count / 2;
             }
 
             EndMove('R', moveFormsSequence);
