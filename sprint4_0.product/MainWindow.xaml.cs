@@ -105,7 +105,7 @@ namespace SoSGame {
       CreateNewGameBoard();
       ResetPlayers();
 
-      if (_gameLogic.CurrentPlayer.PlayerType == 'C') {
+      if (_gameLogic.CurrentPlayer.Type == 'C') {
         MakeComputerMove();
       }
     }
@@ -149,7 +149,7 @@ namespace SoSGame {
           BluePlayerS.IsEnabled = true;
           BluePlayerO.IsEnabled = true;
 
-          if (_gameLogic.CurrentPlayer.PlayerColor == 'B') {
+          if (_gameLogic.CurrentPlayer.Color == 'B') {
             _gameLogic.CurrentPlayer = _gameLogic.BluePlayer;
           }
         } else if (BluePlayerComputer.IsChecked == true) {
@@ -157,7 +157,7 @@ namespace SoSGame {
           BluePlayerS.IsEnabled = false;
           BluePlayerO.IsEnabled = false;
 
-          if (_gameLogic.CurrentPlayer.PlayerColor == 'B') {
+          if (_gameLogic.CurrentPlayer.Color == 'B') {
             _gameLogic.CurrentPlayer = _gameLogic.BluePlayer;
             MakeComputerMove();
           }
@@ -172,7 +172,7 @@ namespace SoSGame {
           RedPlayerS.IsEnabled = true;
           RedPlayerO.IsEnabled = true;
 
-          if (_gameLogic.CurrentPlayer.PlayerColor == 'R') {
+          if (_gameLogic.CurrentPlayer.Color == 'R') {
             _gameLogic.CurrentPlayer = _gameLogic.RedPlayer;
           }
         } else if (RedPlayerComputer.IsChecked == true) {
@@ -180,7 +180,7 @@ namespace SoSGame {
           RedPlayerS.IsEnabled = false;
           RedPlayerO.IsEnabled = false;
 
-          if (_gameLogic.CurrentPlayer.PlayerColor == 'R') {
+          if (_gameLogic.CurrentPlayer.Color == 'R') {
             _gameLogic.CurrentPlayer = _gameLogic.RedPlayer;
             MakeComputerMove();
           }
@@ -190,17 +190,17 @@ namespace SoSGame {
 
     private void BluePlayerLetter_Checked(object sender, RoutedEventArgs e) {
       if (BluePlayerS.IsChecked == true) {
-        _gameLogic.BluePlayer.PlayerLetter = 'S';
+        _gameLogic.BluePlayer.Letter = 'S';
       } else if (BluePlayerO.IsChecked == true) {
-        _gameLogic.BluePlayer.PlayerLetter = 'O';
+        _gameLogic.BluePlayer.Letter = 'O';
       }
     }
 
     private void RedPlayerLetter_Checked(object sender, RoutedEventArgs e) {
       if (RedPlayerS.IsChecked == true) {
-        _gameLogic.RedPlayer.PlayerLetter ='S';
+        _gameLogic.RedPlayer.Letter ='S';
       } else if (RedPlayerO.IsChecked == true) {
-        _gameLogic.RedPlayer.PlayerLetter = 'O';
+        _gameLogic.RedPlayer.Letter = 'O';
       }
     }
 
@@ -208,9 +208,9 @@ namespace SoSGame {
       char letter = _gameLogic.CurrentPlayer.SelectLetter();
 
       if (letter == 'S') {
-        _gameLogic.CurrentPlayer.PlayerLetter = 'S';
+        _gameLogic.CurrentPlayer.Letter = 'S';
       } else if (letter == 'O') {
-        _gameLogic.CurrentPlayer.PlayerLetter = 'O';
+        _gameLogic.CurrentPlayer.Letter = 'O';
       }
 
       Tuple<int, int> square = _gameLogic.CurrentPlayer.SelectSquare(_gameLogic.BoardSize, _gameLogic.IsMoveValid);
@@ -298,7 +298,7 @@ namespace SoSGame {
             CurrentPlayer.Foreground = Brushes.Red;
             _gameLogic.CurrentPlayer = _gameLogic.RedPlayer;
 
-            if (_gameLogic.CurrentPlayer.PlayerType == 'C') {
+            if (_gameLogic.CurrentPlayer.Type == 'C') {
               MakeComputerMove();
             }
           }
@@ -309,7 +309,7 @@ namespace SoSGame {
             char winner = _gameLogic.DetermineWinner();
             DisplayGameOverMessage(winner);
           } else if (moveFormsSequence && !gameOver) {
-            if (_gameLogic.CurrentPlayer.PlayerType == 'C') {
+            if (_gameLogic.CurrentPlayer.Type == 'C') {
               MakeComputerMove();
             }
           } else {
@@ -317,7 +317,7 @@ namespace SoSGame {
             CurrentPlayer.Foreground = Brushes.Red;
             _gameLogic.CurrentPlayer = _gameLogic.RedPlayer;
 
-            if (_gameLogic.CurrentPlayer.PlayerType == 'C') {
+            if (_gameLogic.CurrentPlayer.Type == 'C') {
               MakeComputerMove();
             }
           }
@@ -334,7 +334,7 @@ namespace SoSGame {
             CurrentPlayer.Foreground = Brushes.Blue;
             _gameLogic.CurrentPlayer = _gameLogic.BluePlayer;
 
-            if (_gameLogic.CurrentPlayer.PlayerType == 'C') {
+            if (_gameLogic.CurrentPlayer.Type == 'C') {
               MakeComputerMove();
             }
           }
@@ -345,7 +345,7 @@ namespace SoSGame {
             char winner = _gameLogic.DetermineWinner();
             DisplayGameOverMessage(winner);
           } else if (moveFormsSequence && !gameOver) {
-            if (_gameLogic.CurrentPlayer.PlayerType == 'C') {
+            if (_gameLogic.CurrentPlayer.Type == 'C') {
               MakeComputerMove();
             }
           } else {
@@ -353,7 +353,7 @@ namespace SoSGame {
             CurrentPlayer.Foreground = Brushes.Blue;
             _gameLogic.CurrentPlayer = _gameLogic.BluePlayer;
 
-            if (_gameLogic.CurrentPlayer.PlayerType == 'C') {
+            if (_gameLogic.CurrentPlayer.Type == 'C') {
               MakeComputerMove();
             }
           }
@@ -369,8 +369,8 @@ namespace SoSGame {
       int column = (int)boardSquare.GetValue(Grid.ColumnProperty);
 
       if (_gameLogic.IsMoveValid(row, column)) {
-        if (_gameLogic.CurrentPlayer.PlayerColor == 'B') {
-          if (_gameLogic.BluePlayer.PlayerLetter == 'S') {
+        if (_gameLogic.CurrentPlayer.Color == 'B') {
+          if (_gameLogic.BluePlayer.Letter == 'S') {
             boardSquare.Content = "S";
             _gameLogic.UpdateGameBoardContents('S', row, column);
 
@@ -378,11 +378,11 @@ namespace SoSGame {
 
             if (moveFormsSequence) {
               ColorSequenceSquares('B', sequenceSquares);
-              _gameLogic.BluePlayer.PlayerPoints = sequenceSquares.Count / 2;
+              _gameLogic.BluePlayer.Points = sequenceSquares.Count / 2;
             }
 
             EndMove('B', moveFormsSequence);
-          } else if (_gameLogic.BluePlayer.PlayerLetter == 'O') {
+          } else if (_gameLogic.BluePlayer.Letter == 'O') {
             boardSquare.Content = "O";
             _gameLogic.UpdateGameBoardContents('O', row, column);
 
@@ -390,13 +390,13 @@ namespace SoSGame {
 
             if (moveFormsSequence) {
               ColorSequenceSquares('B', sequenceSquares);
-              _gameLogic.BluePlayer.PlayerPoints = sequenceSquares.Count / 2;
+              _gameLogic.BluePlayer.Points = sequenceSquares.Count / 2;
             }
 
             EndMove('B', moveFormsSequence);
           }
-        } else if (_gameLogic.CurrentPlayer.PlayerColor == 'R') {
-          if (_gameLogic.RedPlayer.PlayerLetter == 'S') {
+        } else if (_gameLogic.CurrentPlayer.Color == 'R') {
+          if (_gameLogic.RedPlayer.Letter == 'S') {
             boardSquare.Content = "S";
             _gameLogic.UpdateGameBoardContents('S', row, column);
 
@@ -404,11 +404,11 @@ namespace SoSGame {
 
             if (moveFormsSequence) {
               ColorSequenceSquares('R', sequenceSquares);
-              _gameLogic.RedPlayer.PlayerPoints = sequenceSquares.Count / 2;
+              _gameLogic.RedPlayer.Points = sequenceSquares.Count / 2;
             }
 
             EndMove('R', moveFormsSequence);
-          } else if (_gameLogic.RedPlayer.PlayerLetter == 'O') {
+          } else if (_gameLogic.RedPlayer.Letter == 'O') {
             boardSquare.Content = "O";
             _gameLogic.UpdateGameBoardContents('O', row, column);
 
@@ -416,7 +416,7 @@ namespace SoSGame {
 
             if (moveFormsSequence) {
               ColorSequenceSquares('R', sequenceSquares);
-              _gameLogic.RedPlayer.PlayerPoints = sequenceSquares.Count / 2;
+              _gameLogic.RedPlayer.Points = sequenceSquares.Count / 2;
             }
 
             EndMove('R', moveFormsSequence);

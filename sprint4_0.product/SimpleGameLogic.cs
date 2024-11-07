@@ -6,13 +6,13 @@
 
     internal override bool GameOver() {
       bool gameBoardFilled = GameBoardContents.All(row => row.All(square => square != '\0'));
-      return (BluePlayer.PlayerPoints > 0 || RedPlayer.PlayerPoints > 0 || gameBoardFilled);
+      return (BluePlayer.Points > 0 || RedPlayer.Points > 0 || gameBoardFilled);
     }
 
     internal override char DetermineWinner() {
-      if (BluePlayer.PlayerPoints > 0) {
+      if (BluePlayer.Points > 0) {
         return 'B';
-      } else if (RedPlayer.PlayerPoints > 0) {
+      } else if (RedPlayer.Points > 0) {
         return 'R';
       } else {
         return 'D';

@@ -3,7 +3,7 @@
     private static readonly Random _random = new Random();
 
     public ComputerPlayer(char playerLetter) : base(playerLetter) {
-      PlayerType = 'C';
+      Type = 'C';
     }
 
     internal override char SelectLetter() {

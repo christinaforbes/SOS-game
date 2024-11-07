@@ -1,15 +1,15 @@
 ﻿namespace SoSGame {
   class Player {
-    public char PlayerType { get; set; }
-    public char PlayerColor { get; set; }
-    public char PlayerLetter { get; set; }
-    public int PlayerPoints { get; set; }
+    public char Type { get; set; }
+    public char Color { get; set; }
+    public char Letter { get; set; }
+    public int Points { get; set; }
 
     public Player(char playerColor) {
-      PlayerType = 'H';
-      PlayerColor = playerColor;
-      PlayerLetter = 'S';
-      PlayerPoints = 0;
+      Type = 'H';
+      Color = playerColor;
+      Letter = 'S';
+      Points = 0;
     }
 
     internal virtual char SelectLetter() {

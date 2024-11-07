@@ -13,9 +13,9 @@
     }
 
     internal override char DetermineWinner() {
-      if (BluePlayer.PlayerPoints > RedPlayer.PlayerPoints) {
+      if (BluePlayer.Points > RedPlayer.Points) {
         return 'B';
-      } else if (RedPlayer.PlayerPoints > BluePlayer.PlayerPoints) {
+      } else if (RedPlayer.Points > BluePlayer.Points) {
         return 'R';
       } else {
         return 'D';

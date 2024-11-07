@@ -56,8 +56,8 @@ namespace SoSGameTests {
     [TestCase(3, 1)]
     [TestCase(10, 5)]
     public void General_DetermineWinner_BluePlayer_IsEqual(int bluePlayerPoints, int redPlayerPoints) {
-      _gameLogic.BluePlayer.PlayerPoints = bluePlayerPoints;
-      _gameLogic.RedPlayer.PlayerPoints = redPlayerPoints;
+      _gameLogic.BluePlayer.Points = bluePlayerPoints;
+      _gameLogic.RedPlayer.Points = redPlayerPoints;
 
       char actual = _gameLogic.DetermineWinner();
 
@@ -68,8 +68,8 @@ namespace SoSGameTests {
     [TestCase(1, 3)]
     [TestCase(5, 10)]
     public void General_DetermineWinner_RedPlayer_IsEqual(int bluePlayerPoints, int redPlayerPoints) {
-      _gameLogic.BluePlayer.PlayerPoints = bluePlayerPoints;
-      _gameLogic.RedPlayer.PlayerPoints = redPlayerPoints;
+      _gameLogic.BluePlayer.Points = bluePlayerPoints;
+      _gameLogic.RedPlayer.Points = redPlayerPoints;
 
       char actual = _gameLogic.DetermineWinner();
 
@@ -79,8 +79,8 @@ namespace SoSGameTests {
     [TestCase(0, 0)]
     [TestCase(5, 5)]
     public void General_DetermineWinner_Draw_IsEqual(int bluePlayerPoints, int redPlayerPoints) {
-      _gameLogic.BluePlayer.PlayerPoints = bluePlayerPoints;
-      _gameLogic.RedPlayer.PlayerPoints = redPlayerPoints;
+      _gameLogic.BluePlayer.Points = bluePlayerPoints;
+      _gameLogic.RedPlayer.Points = redPlayerPoints;
 
       char actual = _gameLogic.DetermineWinner();
 
