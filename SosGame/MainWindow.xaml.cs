@@ -106,13 +106,21 @@ namespace SosGame {
         _gameState.BluePlayer = new Player(GameLogic.BluePlayer);
         BluePlayerS.IsEnabled = true;
         BluePlayerO.IsEnabled = true;
+
+        if (_gameState.CurrentPlayer.Color == GameLogic.BluePlayer) {
+          _gameState.CurrentPlayer = _gameState.BluePlayer;
+        }
       } else if (BluePlayerComputer.IsChecked == true) {
         _gameState.BluePlayer = new ComputerPlayer(GameLogic.BluePlayer);
         BluePlayerS.IsEnabled = false;
         BluePlayerO.IsEnabled = false;
 
-        if (!_gameState.ReplayingGame && _gameState.CurrentPlayer.Color == GameLogic.BluePlayer) {
-          await MakeComputerMove();
+        if (_gameState.CurrentPlayer.Color == GameLogic.BluePlayer) {
+          _gameState.CurrentPlayer = _gameState.BluePlayer;
+
+          if (!_gameState.ReplayingGame) {
+            await MakeComputerMove();
+          }
         }
       }
     }
@@ -122,13 +130,21 @@ namespace SosGame {
         _gameState.RedPlayer = new Player(GameLogic.RedPlayer);
         RedPlayerS.IsEnabled = true;
         RedPlayerO.IsEnabled = true;
+
+        if (_gameState.CurrentPlayer.Color == GameLogic.RedPlayer) {
+          _gameState.CurrentPlayer = _gameState.RedPlayer;
+        }
       } else if (RedPlayerComputer.IsChecked == true) {
         _gameState.RedPlayer = new ComputerPlayer(GameLogic.RedPlayer);
         RedPlayerS.IsEnabled = false;
         RedPlayerO.IsEnabled = false;
 
-        if (!_gameState.ReplayingGame && _gameState.CurrentPlayer.Color == GameLogic.RedPlayer) {
-          await MakeComputerMove();
+        if (_gameState.CurrentPlayer.Color == GameLogic.RedPlayer) {
+          _gameState.CurrentPlayer = _gameState.RedPlayer;
+
+          if (!_gameState.ReplayingGame) {
+            await MakeComputerMove();
+          }
         }
       }
     }
