@@ -1,21 +1,19 @@
 ﻿namespace SosGame {
   class SimpleGameLogic : GameLogic {
-    public SimpleGameLogic() : base() {}
-
-    public SimpleGameLogic(int newBoardSize) : base(newBoardSize) {}
+    public SimpleGameLogic(GameState gameState) : base(gameState) {}
 
     internal override bool GameOver() {
-      bool gameBoardFilled = GameBoardContents.All(row => row.All(square => square != '\0'));
-      return (BluePlayer.Points > 0 || RedPlayer.Points > 0 || gameBoardFilled);
+      bool gameBoardFilled = Array.TrueForAll(_gameState.GameBoardContents, row => Array.TrueForAll(row, square => square != EmptySquare));
+      return (_gameState.BluePlayer.Points > 0 || _gameState.RedPlayer.Points > 0 || gameBoardFilled);
     }
 
     internal override char DetermineWinner() {
-      if (BluePlayer.Points > 0) {
-        return 'B';
-      } else if (RedPlayer.Points > 0) {
-        return 'R';
+      if (_gameState.BluePlayer.Points > 0) {
+        return BluePlayer;
+      } else if (_gameState.RedPlayer.Points > 0) {
+        return RedPlayer;
       } else {
-        return 'D';
+        return Draw;
       }
     }
   }

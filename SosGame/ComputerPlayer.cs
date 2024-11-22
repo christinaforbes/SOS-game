@@ -2,7 +2,7 @@
   class ComputerPlayer : Player {
     private static readonly Random _random = new Random();
 
-    public ComputerPlayer(char playerLetter) : base(playerLetter) {
+    public ComputerPlayer(char playerColor) : base(playerColor) {
       Type = 'C';
     }
 

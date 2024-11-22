@@ -3,16 +3,18 @@
 namespace SosGameTests {
   [TestFixture]
   public class GeneralGameLogicTests {
+    private GameState _gameState;
     private GeneralGameLogic _gameLogic;
 
     [SetUp]
     public void Setup() {
-      _gameLogic = new GeneralGameLogic();
+      _gameState = new GameState(GameLogic.GeneralGame, 4);
+      _gameLogic = new GeneralGameLogic(_gameState);
     }
 
     [Test]
     public void General_GameOver_BoardFilled_IsTrue() {
-      _gameLogic.GameBoardContents = new char[4][] {
+      _gameState.GameBoardContents = new char[4][] {
         new char[] {'S', 'O', 'S', 'O'},
         new char[] {'S', 'O', 'S', 'O'},
         new char[] {'S', 'O', 'S', 'O'},
@@ -26,7 +28,7 @@ namespace SosGameTests {
 
     [Test]
     public void General_GameOver_BoardNotFilled_IsFalse() {
-      _gameLogic.GameBoardContents = new char[4][] {
+      _gameState.GameBoardContents = new char[4][] {
         new char[] {'S', 'O', '\0', 'O'},
         new char[] {'S', 'O', '\0', 'O'},
         new char[] {'S', 'O', '\0', 'O'},
@@ -40,7 +42,7 @@ namespace SosGameTests {
 
     [Test]
     public void General_GameOver_BoardEmpty_IsFalse() {
-      _gameLogic.GameBoardContents = new char[4][] {
+      _gameState.GameBoardContents = new char[4][] {
         new char[] {'\0', '\0', '\0', '\0'},
         new char[] {'\0', '\0', '\0', '\0'},
         new char[] {'\0', '\0', '\0', '\0'},
@@ -56,8 +58,8 @@ namespace SosGameTests {
     [TestCase(3, 1)]
     [TestCase(10, 5)]
     public void General_DetermineWinner_BluePlayer_IsEqual(int bluePlayerPoints, int redPlayerPoints) {
-      _gameLogic.BluePlayer.Points = bluePlayerPoints;
-      _gameLogic.RedPlayer.Points = redPlayerPoints;
+      _gameState.BluePlayer.Points = bluePlayerPoints;
+      _gameState.RedPlayer.Points = redPlayerPoints;
 
       char actual = _gameLogic.DetermineWinner();
 
@@ -68,8 +70,8 @@ namespace SosGameTests {
     [TestCase(1, 3)]
     [TestCase(5, 10)]
     public void General_DetermineWinner_RedPlayer_IsEqual(int bluePlayerPoints, int redPlayerPoints) {
-      _gameLogic.BluePlayer.Points = bluePlayerPoints;
-      _gameLogic.RedPlayer.Points = redPlayerPoints;
+      _gameState.BluePlayer.Points = bluePlayerPoints;
+      _gameState.RedPlayer.Points = redPlayerPoints;
 
       char actual = _gameLogic.DetermineWinner();
 
@@ -79,8 +81,8 @@ namespace SosGameTests {
     [TestCase(0, 0)]
     [TestCase(5, 5)]
     public void General_DetermineWinner_Draw_IsEqual(int bluePlayerPoints, int redPlayerPoints) {
-      _gameLogic.BluePlayer.Points = bluePlayerPoints;
-      _gameLogic.RedPlayer.Points = redPlayerPoints;
+      _gameState.BluePlayer.Points = bluePlayerPoints;
+      _gameState.RedPlayer.Points = redPlayerPoints;
 
       char actual = _gameLogic.DetermineWinner();
 
