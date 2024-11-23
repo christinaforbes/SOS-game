@@ -298,6 +298,9 @@ namespace SosGame {
       if (gameOver) {
         char winner = _gameLogic.DetermineWinner();
         DisplayGameOverMessage(winner);
+
+        _gameState.GameInProgress = false;
+        RecordingGame.IsEnabled = true;
       } else if ((_gameState.GameMode == GameLogic.GeneralGame) && moveFormsSequence) {
         if (!_gameState.ReplayingGame && (_gameState.CurrentPlayer.Type == GameLogic.ComputerPlayer)) {
           await MakeComputerMove();
@@ -313,6 +316,23 @@ namespace SosGame {
           await MakeComputerMove();
         }
       }
+    }
+
+    private static bool SavedGameExists() {
+      bool savedGameExists = true;
+      string errorMessage = "";
+
+      if (!File.Exists(GameSave.SavedGameFileName) || !File.Exists(GameSave.SavedGameSettingsFileName)) {
+        errorMessage = "Cannot replay game. No saved game file exists";
+        MessageBox.Show(errorMessage, "", MessageBoxButton.OK, MessageBoxImage.Error);
+        savedGameExists = false;
+      } else if (new FileInfo(GameSave.SavedGameFileName).Length == 0 || new FileInfo(GameSave.SavedGameSettingsFileName).Length == 0) {
+        errorMessage = "Cannot replay game. Saved game file is empty";
+        MessageBox.Show(errorMessage, "", MessageBoxButton.OK, MessageBoxImage.Error);
+        savedGameExists = false;
+      }
+
+      return savedGameExists;
     }
 
     private void SetUpReplay() {
@@ -358,23 +378,25 @@ namespace SosGame {
     }
 
     private void ReplayGame() {
-      SetUpReplay();
+      if (SavedGameExists()) {
+        SetUpReplay();
 
-      List<string> moves = File.ReadAllLines(GameSave.SavedGameFileName).ToList();
-      int currentMoveIndex = 0;
+        List<string> moves = File.ReadAllLines(GameSave.SavedGameFileName).ToList();
+        int currentMoveIndex = 0;
 
-      _replayTimer.Interval = TimeSpan.FromMilliseconds(1500);
-      _replayTimer.Tick += (sender, e) => {
-        if (currentMoveIndex < moves.Count) {
-          string move = moves[currentMoveIndex];
-          ReplayMove(move);
-          currentMoveIndex++;
-        } else {
-          _replayTimer.Stop();
-          _gameState.ReplayingGame = false;
-        }
-      };
-      _replayTimer.Start();
+        _replayTimer.Interval = TimeSpan.FromMilliseconds(1500);
+        _replayTimer.Tick += (sender, e) => {
+          if (currentMoveIndex < moves.Count) {
+            string move = moves[currentMoveIndex];
+            ReplayMove(move);
+            currentMoveIndex++;
+          } else {
+            _replayTimer.Stop();
+            _gameState.ReplayingGame = false;
+          }
+        };
+        _replayTimer.Start();
+      }
     }
 
     private void RecordGame_Checked(object sender, RoutedEventArgs e) {
